@@ -8,7 +8,6 @@ import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 @Data
@@ -30,8 +29,6 @@ public class VCard {
 	@ToString.Exclude
 	private byte[] qr;
 
-	@EqualsAndHashCode.Exclude
-	@ToString.Exclude
 	private AuditMetadata auditMetadata;
 	
 }

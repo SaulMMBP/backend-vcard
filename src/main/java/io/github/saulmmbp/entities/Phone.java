@@ -7,8 +7,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "phones")
@@ -20,6 +21,10 @@ public class Phone {
 	private String phoneNumber;
 	
 	@EqualsAndHashCode.Exclude
-	@ToString.Exclude
 	private AuditMetadata auditMetadata;
+	
+	public Phone(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+	
 }

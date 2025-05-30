@@ -1,5 +1,6 @@
 package io.github.saulmmbp.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,12 +11,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -24,7 +22,6 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
 public class Contact {
 
 	@Id
@@ -38,14 +35,10 @@ public class Contact {
 	private String company;
 	private String web;
 	
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinTable(name = "contacts_phones", 
-		joinColumns = @JoinColumn(name = "contact_id"),
-		inverseJoinColumns = @JoinColumn(name = "phone_id"),
-		uniqueConstraints = @UniqueConstraint(columnNames = {"contact_id", "phone_id"}))
-	private List<Phone> phones;
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	@JoinColumn(name = "contact_id", nullable = false)
+	private List<Phone> phones = new ArrayList<>();
 	
-	@ToString.Exclude
 	private AuditMetadata auditMetadata;
 
 	@Override
