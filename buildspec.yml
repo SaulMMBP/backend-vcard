@@ -12,6 +12,6 @@ phases:
     commands:
       - echo "Construyendo aplicación"
       - mvn clean package -DskipTests
-  artifacts:
-    files:
-      - target/*.jar
+artifacts:
+  files:
+    - target/*.jar
