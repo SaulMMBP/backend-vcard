@@ -48,32 +48,34 @@ Se adjunta el archivo sql y diagrama en la carpeta `db`
 
 ### Security
 
-| Método | Path                           | Seguridad                                                                 |
-| ------ | ------------------------------ | ------------------------------------------------------------------------- |
-| GET    | /{userId}/contacts             | Usuario autenticado en cognito, los recursos pertenecen al usuario        |
-| GET    | /{userId}/contacts/{contactId} | Usuario autenticado en cognito, el recurso pertenece al usuario           |
-| POST   | /{userId}/contacts             | Usuario autenticado en cognito, el recurso creado pertenecerá al usuario  |
-| PUT    | /{userId}/contacts/{contactId} | Usuario autenticado en cognito, el recurso pertenece al usuario           |
-| DELETE | /{userId}/contacts/{contactId} | Usuario autenticado en cognito, el recurso pertenece al usuario           |
-| POST   | /users                         | Aplicación cliente M2M autenticada en cognito, únicamente para AWS Lambda |
-| GET    | /{userId}/summary              | Usuario autenticado en cognito, los recursos pertenecen al usuario        |
-| POST   | /{userId}/vcards               | Usuario autenticado en cognito, el recurso creado pertenecerá al usuario  |
-| GET    | /{userId}/vcards               | Usuario autenticado en cognito, los recursos pertenecen al usuario        |
-| GET    | /{userId}/vcards/{vcardId}     | Usuario autenticado en cognito, el recurso pertenece al usuario           |
-| PUT    | /{userId}/vcards/{vcardId}     | Usuario autenticado en cognito, el recurso pertenece al usuario           |
-| DELETE | /{userId}/vcards/{vcardId}     | Usuario autenticado en cognito, el recurso pertenece al usuario           |
-| GET    | /{userId}/vcards/{vcardId}/qr  | Usuario autenticado en cognito, el recurso pertenece al usuario           |
+| Método | Path                           | Seguridad                                                                |
+| ------ | ------------------------------ | ------------------------------------------------------------------------ |
+| GET    | /{userId}/contacts             | Usuario autenticado en cognito, los recursos pertenecen al usuario       |
+| GET    | /{userId}/contacts/{contactId} | Usuario autenticado en cognito, el recurso pertenece al usuario          |
+| POST   | /{userId}/contacts             | Usuario autenticado en cognito, el recurso creado pertenecerá al usuario |
+| PUT    | /{userId}/contacts/{contactId} | Usuario autenticado en cognito, el recurso pertenece al usuario          |
+| DELETE | /{userId}/contacts/{contactId} | Usuario autenticado en cognito, el recurso pertenece al usuario          |
+| POST   | /users                         | Autenticación http basic, únicamente para AWS Lambda                     |
+| GET    | /{userId}/summary              | Usuario autenticado en cognito, los recursos pertenecen al usuario       |
+| POST   | /{userId}/vcards               | Usuario autenticado en cognito, el recurso creado pertenecerá al usuario |
+| GET    | /{userId}/vcards               | Usuario autenticado en cognito, los recursos pertenecen al usuario       |
+| GET    | /{userId}/vcards/{vcardId}     | Usuario autenticado en cognito, el recurso pertenece al usuario          |
+| PUT    | /{userId}/vcards/{vcardId}     | Usuario autenticado en cognito, el recurso pertenece al usuario          |
+| DELETE | /{userId}/vcards/{vcardId}     | Usuario autenticado en cognito, el recurso pertenece al usuario          |
+| GET    | /{userId}/vcards/{vcardId}/qr  | Usuario autenticado en cognito, el recurso pertenece al usuario          |
 
 ### Variables/Propiedades
 
 #### Ambiente DEV (LOCAL)
 
-| Variable de entorno | Descripción                                                                    |
-| ------------------- | ------------------------------------------------------------------------------ |
-| DB_URL              | Cadena de conexión de base de datos en MySQL                                   |
-| DB_USERNAME         | Usuario de la base de datos para el consumo desde la aplicación                |
-| DB_PASSWORD         | Contraseña del usuario de la base de datos para el consumo desde la aplicación |
-| ISSUER_URI          | Issuer de user pool de cognito                                                 |
+| Variable de entorno     | Descripción                                                                    |
+| ----------------------- | ------------------------------------------------------------------------------ |
+| DB_URL                  | Cadena de conexión de base de datos en MySQL                                   |
+| DB_USERNAME             | Usuario de la base de datos para el consumo desde la aplicación                |
+| DB_PASSWORD             | Contraseña del usuario de la base de datos para el consumo desde la aplicación |
+| ISSUER_URI              | Issuer de user pool de cognito                                                 |
+| SECURITY_BASIC_USERNAME | Username para autenticación http basic para lambda en AWS                      |
+| SECURITY_BASIC_PASSWORD | Password para autenticación http basic para lambda en AWS                      |
 
 #### Ambiente PROD
 
@@ -85,6 +87,8 @@ Para producción se utilizan la Parameters Store de AWS con el path base /config
 | spring.datasource.username                           | Usuario de la base de datos para el consumo desde la aplicación                |
 | spring.datasource.password                           | Contraseña del usuario de la base de datos para el consumo desde la aplicación |
 | spring.security.oauth2.resourceserver.jwt.issuer-uri | Issuer de user pool de cognito                                                 |
+| spring.security.basic.username                       | Username para autenticación http basic para lambda en AWS                      |
+| spring.security.basic.password                       | Password para autenticación http basic para lambda en AWS                      |
 
 ## CI/CD con AWS Pipelines
 
