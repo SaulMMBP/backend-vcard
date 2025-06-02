@@ -1,5 +1,5 @@
 package io.github.saulmmbp.dtos;
 
-public record SummaryResponseDto(long contactsTotal, long cardsTotal) {
+public record SummaryResponseDto(Long contactsTotal, Long cardsTotal) {
 
 }

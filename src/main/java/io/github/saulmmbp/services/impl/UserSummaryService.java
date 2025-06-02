@@ -12,14 +12,14 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class UserSummaryService implements IUserSummaryService {
 
-	private IVCardRepository vcardRepository;
-	private IContactRepository contactRepository;
-	
-	@Override
-	public SummaryResponseDto getSummaryByUserId(String userId) {
-		long vcardsTotal = vcardRepository.countByUserId(userId);
-		long contactsTotal = contactRepository.countByUserId(userId);
-		return new SummaryResponseDto(contactsTotal, vcardsTotal);
-	}
-	
+    private IVCardRepository vcardRepository;
+    private IContactRepository contactRepository;
+
+    @Override
+    public SummaryResponseDto getSummaryByUserId(String userId) {
+        long vcardsTotal = vcardRepository.countByUserId(userId);
+        long contactsTotal = contactRepository.countByUserId(userId);
+        return new SummaryResponseDto(contactsTotal, vcardsTotal);
+    }
+
 }

@@ -15,20 +15,20 @@ import lombok.ToString;
 @Table(name = "vcards")
 public class VCard {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private String userId;
-	private String name;
-	private String color;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String userId;
+    private String name;
+    private String color;
 
-	@ManyToOne
-	private Contact contact;
-	
-	@Lob
-	@ToString.Exclude
-	private byte[] qr;
+    @ManyToOne
+    private Contact contact;
 
-	private AuditMetadata auditMetadata;
-	
+    @Lob
+    @ToString.Exclude
+    private byte[] qr;
+
+    private AuditMetadata auditMetadata;
+
 }

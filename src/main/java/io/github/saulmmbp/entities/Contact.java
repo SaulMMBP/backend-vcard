@@ -24,46 +24,45 @@ import lombok.ToString;
 @ToString
 public class Contact {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private String userId;
-	private String identifier;
-	private String name;
-	private String email;
-	private String position;
-	private String company;
-	private String web;
-	
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-	@JoinColumn(name = "contact_id", nullable = false)
-	private List<Phone> phones = new ArrayList<>();
-	
-	private AuditMetadata auditMetadata;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String userId;
+    private String identifier;
+    private String name;
+    private String email;
+    private String position;
+    private String company;
+    private String web;
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(company, email, id, identifier, name, phones, position, userId, web);
-	}
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JoinColumn(name = "contact_id", nullable = false)
+    private List<Phone> phones = new ArrayList<>();
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Contact other = (Contact) obj;
-		
-		boolean isEqualPhones = other.phones.containsAll(phones);
-		isEqualPhones = phones.size() == other.getPhones().size();
-		
-		return Objects.equals(company, other.company) && Objects.equals(email, other.email)
-				&& Objects.equals(id, other.id) && Objects.equals(identifier, other.identifier)
-				&& Objects.equals(name, other.name) && isEqualPhones
-				&& Objects.equals(position, other.position) && Objects.equals(userId, other.userId)
-				&& Objects.equals(web, other.web);
-	}
-	
+    private AuditMetadata auditMetadata;
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(company, email, id, identifier, name, phones, position, userId, web);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Contact other = (Contact) obj;
+
+        boolean isEqualPhones = other.phones.containsAll(phones);
+        isEqualPhones = phones.size() == other.getPhones().size();
+
+        return Objects.equals(company, other.company) && Objects.equals(email, other.email)
+                && Objects.equals(id, other.id) && Objects.equals(identifier, other.identifier)
+                && Objects.equals(name, other.name) && isEqualPhones && Objects.equals(position, other.position)
+                && Objects.equals(userId, other.userId) && Objects.equals(web, other.web);
+    }
+
 }

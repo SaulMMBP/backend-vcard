@@ -13,13 +13,13 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class UserService implements IUserService {
 
-	private IUserRepository userRepository;
-	private IUserMapper userMapper;
-	
-	@Override
-	public void createUser(UserRequestDto userRequest) {
-		User user = userMapper.toEntity(userRequest);
-		userRepository.save(user);
-	}
+    private IUserRepository userRepository;
+    private IUserMapper userMapper;
+
+    @Override
+    public void createUser(UserRequestDto userRequest) {
+        User user = userMapper.toEntity(userRequest);
+        userRepository.save(user);
+    }
 
 }

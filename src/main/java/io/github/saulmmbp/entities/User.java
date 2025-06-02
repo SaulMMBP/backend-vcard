@@ -10,10 +10,10 @@ import lombok.Data;
 @Data
 public class User {
 
-	@Id
-	private String id;
-	private String email;
-	
-	private AuditMetadata auditMetadata;
-	
+    @Id
+    private String id;
+    private String email;
+
+    private AuditMetadata auditMetadata;
+
 }

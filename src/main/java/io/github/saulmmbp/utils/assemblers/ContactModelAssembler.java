@@ -16,14 +16,14 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class ContactModelAssembler implements RepresentationModelAssembler<ContactResponseDto, ContactModel> {
 
-	private IContactMapper contactMapper;
+    private IContactMapper contactMapper;
 
-	@Override
-	public ContactModel toModel(ContactResponseDto entity) {
-		ContactModel model = contactMapper.toModel(entity);
-		model.add(linkTo(methodOn(ContactController.class).getContactByIdAndUserId(entity.id(), entity.userId()))
-				.withSelfRel());
-		return model;
-	}
+    @Override
+    public ContactModel toModel(ContactResponseDto entity) {
+        ContactModel model = contactMapper.toModel(entity);
+        model.add(linkTo(methodOn(ContactController.class).getContactByIdAndUserId(entity.id(), entity.userId()))
+                .withSelfRel());
+        return model;
+    }
 
 }

@@ -16,13 +16,14 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class VCardModelAssembler implements RepresentationModelAssembler<VCardResponseDto, VCardModel> {
 
-	private IVCardMapper vcardMapper;
+    private IVCardMapper vcardMapper;
 
-	@Override
-	public VCardModel toModel(VCardResponseDto entity) {
-		VCardModel model = vcardMapper.toModel(entity);
-		model.add(linkTo(methodOn(VCardController.class).getVCardByIdAndUserId(entity.userId(), entity.id())).withSelfRel());
-		return model;
-	}
+    @Override
+    public VCardModel toModel(VCardResponseDto entity) {
+        VCardModel model = vcardMapper.toModel(entity);
+        model.add(linkTo(methodOn(VCardController.class).getVCardByIdAndUserId(entity.userId(), entity.id()))
+                .withSelfRel());
+        return model;
+    }
 
 }

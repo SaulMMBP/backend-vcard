@@ -17,14 +17,14 @@ import lombok.EqualsAndHashCode;
 @Relation(collectionRelation = "contacts")
 public class ContactModel extends RepresentationModel<ContactModel> {
 
-	private Long id;
-	private String userId;
-	private String identifier;
-	private String name;
-	private String email;
-	private String position;
-	private String company;
-	private String web;
-	private List<String> phones;
-	
+    private Long id;
+    private String userId;
+    private String identifier;
+    private String name;
+    private String email;
+    private String position;
+    private String company;
+    private String web;
+    private List<String> phones;
+
 }

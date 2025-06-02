@@ -10,10 +10,10 @@ import io.github.saulmmbp.entities.VCard;
 
 public interface IVCardRepository extends JpaRepository<VCard, Long> {
 
-	Optional<VCard> findByIdAndUserId(Long vcardId, String userId);
-	
-	Page<VCard> findByUserId(String userId, Pageable pageable);
-	
-	Long countByUserId(String userId);
-	
+    Optional<VCard> findByIdAndUserId(Long vcardId, String userId);
+
+    Page<VCard> findByUserId(String userId, Pageable pageable);
+
+    Long countByUserId(String userId);
+
 }

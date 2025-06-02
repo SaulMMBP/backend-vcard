@@ -12,9 +12,9 @@ import lombok.EqualsAndHashCode;
 @Relation(collectionRelation = "vcards")
 public class VCardModel extends RepresentationModel<VCardModel> {
 
-	private String name;
-	private String color;
-	private ContactResponseDto contact;
-	private byte[] qr;
-	
+    private String name;
+    private String color;
+    private ContactResponseDto contact;
+    private byte[] qr;
+
 }

@@ -9,7 +9,7 @@ import io.github.saulmmbp.entities.User;
 @Mapper(componentModel = "spring")
 public interface IUserMapper {
 
-	@Mapping(target = "auditMetadata", ignore = true)
-	User toEntity(UserRequestDto request);
-	
+    @Mapping(target = "auditMetadata", ignore = true)
+    User toEntity(UserRequestDto request);
+
 }

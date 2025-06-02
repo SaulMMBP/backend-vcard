@@ -9,16 +9,16 @@ import io.github.saulmmbp.dtos.VCardResponseDto;
 
 public interface IVCardService {
 
-	VCardResponseDto createVCardForUser(String userId, VCardRequestDto vcardRequest);
-	
-	Page<VCardResponseDto> getVCardsByUserId(String userId, Pageable pageable);
-	
-	VCardResponseDto getVCardByIdAndUserId(Long vcardId, String userId);
-	
-	VCardResponseDto updateVCardForUser(Long vcardId, String userId, VCardRequestDto vcardRequest);
-	
-	void deleteVCardForUser(Long vcardId, String userId);
-	
-	Resource downloadQRImage(Long vcardId, String userId);
-	
+    VCardResponseDto createVCardForUser(String userId, VCardRequestDto vcardRequest);
+
+    Page<VCardResponseDto> getVCardsByUserId(String userId, Pageable pageable);
+
+    VCardResponseDto getVCardByIdAndUserId(Long vcardId, String userId);
+
+    VCardResponseDto updateVCardForUser(Long vcardId, String userId, VCardRequestDto vcardRequest);
+
+    void deleteVCardForUser(Long vcardId, String userId);
+
+    Resource downloadQRImage(Long vcardId, String userId);
+
 }

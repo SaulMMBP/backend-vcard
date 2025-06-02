@@ -4,6 +4,6 @@ import io.github.saulmmbp.dtos.SummaryResponseDto;
 
 public interface IUserSummaryService {
 
-	SummaryResponseDto getSummaryByUserId(String userId);
-	
+    SummaryResponseDto getSummaryByUserId(String userId);
+
 }

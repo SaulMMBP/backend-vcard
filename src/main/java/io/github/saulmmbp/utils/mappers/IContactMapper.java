@@ -14,26 +14,26 @@ import io.github.saulmmbp.representationmodels.ContactModel;
 @Mapper(componentModel = "spring")
 public interface IContactMapper {
 
-	ContactResponseDto toResponseDto(Contact entity);
-	
-	List<String> toPhoneNumberList(List<Phone> phones);
-	
-	default String toPhoneNumber(Phone phone) {
-		return phone.getPhoneNumber();
-	}
-	
-	@Mapping(target = "id", ignore = true)
-	@Mapping(target = "userId", ignore = true)
-	@Mapping(target = "auditMetadata", ignore = true)
-	Contact toEntity(ContactRequestDto request);
-	
-	List<Phone> toPhoneList(List<String> phones);
-	
-	default Phone toPhone(String phoneNumber) {
-		return new Phone(phoneNumber);
-	}
-	
+    ContactResponseDto toResponseDto(Contact entity);
+
+    List<String> toPhoneNumberList(List<Phone> phones);
+
+    default String toPhoneNumber(Phone phone) {
+        return phone.getPhoneNumber();
+    }
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "userId", ignore = true)
+    @Mapping(target = "auditMetadata", ignore = true)
+    Contact toEntity(ContactRequestDto request);
+
+    List<Phone> toPhoneList(List<String> phones);
+
+    default Phone toPhone(String phoneNumber) {
+        return new Phone(phoneNumber);
+    }
+
 //	@Mapping(target = "add", ignore = true)
-	ContactModel toModel(ContactResponseDto dto);
-	
+    ContactModel toModel(ContactResponseDto dto);
+
 }

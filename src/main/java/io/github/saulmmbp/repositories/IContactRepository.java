@@ -8,12 +8,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import io.github.saulmmbp.entities.Contact;
 
-public interface IContactRepository extends JpaRepository<Contact, Long>{
+public interface IContactRepository extends JpaRepository<Contact, Long> {
 
-	Long countByUserId(String userId);
-	
-	Page<Contact> findAllByUserId(String userId, Pageable pageable);
-	
-	Optional<Contact> findByIdAndUserId(Long contactId, String userId);
-	
+    Long countByUserId(String userId);
+
+    Page<Contact> findAllByUserId(String userId, Pageable pageable);
+
+    Optional<Contact> findByIdAndUserId(Long contactId, String userId);
+
 }

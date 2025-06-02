@@ -14,17 +14,17 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "phones")
 public class Phone {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private String phoneNumber;
-	
-	@EqualsAndHashCode.Exclude
-	private AuditMetadata auditMetadata;
-	
-	public Phone(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-	
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String phoneNumber;
+
+    @EqualsAndHashCode.Exclude
+    private AuditMetadata auditMetadata;
+
+    public Phone(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
 }

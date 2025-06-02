@@ -12,22 +12,22 @@ import io.github.saulmmbp.representationmodels.VCardModel;
 @Mapper(componentModel = "spring", uses = IContactMapper.class)
 public interface IVCardMapper {
 
-	@Mapping(target = "id", ignore = true)
-	@Mapping(target = "userId", ignore = true)
-	@Mapping(target = "auditMetadata", ignore = true)
-	@Mapping(target = "qr", ignore = true)
-	@Mapping(source = "contactId", target = "contact")
-	VCard toEntity(VCardRequestDto request);
-	
-	default Contact toContact(Long contactId) {
-		Contact contact = new Contact();
-		contact.setId(contactId);
-		return contact;
-	}
-	
-	VCardResponseDto toResponseDto(VCard vcard);
-	
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "userId", ignore = true)
+    @Mapping(target = "auditMetadata", ignore = true)
+    @Mapping(target = "qr", ignore = true)
+    @Mapping(source = "contactId", target = "contact")
+    VCard toEntity(VCardRequestDto request);
+
+    default Contact toContact(Long contactId) {
+        Contact contact = new Contact();
+        contact.setId(contactId);
+        return contact;
+    }
+
+    VCardResponseDto toResponseDto(VCard vcard);
+
 //	@Mapping(target = "add", ignore = true)
-	VCardModel toModel(VCardResponseDto dto);
-	
+    VCardModel toModel(VCardResponseDto dto);
+
 }
