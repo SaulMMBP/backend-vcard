@@ -33,7 +33,7 @@ public class GlobalExceptionHandler {
             WebRequest request) {
         ErrorDetailsDto errorDetails = new ErrorDetailsDto(new Date(), exception.getMessage(),
                 request.getDescription(false));
-        return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorDetails);
     }
 
     @ExceptionHandler(ResourceNotBelongsUserException.class)
@@ -41,6 +41,15 @@ public class GlobalExceptionHandler {
             ResourceNotBelongsUserException exception, WebRequest request) {
         ErrorDetailsDto errorDetails = new ErrorDetailsDto(new Date(), exception.getMessage(),
                 request.getDescription(false));
-        return new ResponseEntity<>(errorDetails, HttpStatus.UNAUTHORIZED);
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorDetails);
     }
+    
+    @ExceptionHandler(ResourceAlreadyExistsException.class)
+    public ResponseEntity<ErrorDetailsDto> resourceAlreadyExistsExceptionHandler(
+            ResourceNotBelongsUserException exception, WebRequest request) {
+        ErrorDetailsDto errorDetails = new ErrorDetailsDto(new Date(), exception.getMessage(),
+                request.getDescription(false));
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorDetails);
+    }
+    
 }
