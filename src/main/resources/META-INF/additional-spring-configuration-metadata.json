@@ -1,14 +1,9 @@
-{
-    "properties": [
-        {
-			"name": "spring.security.basic.username",
-			"type": "java.lang.String",
-            "description": "Username para autenticación tipo basic utilizada por lambda en AWS"
-        },
-        {
-            "name": "spring.security.basic.password",
-            "type": "java.lang.String",
-            "description": "Password para autenticación tipo basic utilizada por lambda en AWS"
-        }
-    ]
-}
+{"properties": [{
+  "name": "spring.security.basic.username",
+  "type": "java.lang.String",
+  "description": "Username para autenticación basic desde aws lambda"
+},{
+  "name": "spring.security.basic.password",
+  "type": "java.lang.String",
+  "description": "Password para autenticación basic desde aws lambda"
+}]}
