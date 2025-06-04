@@ -62,7 +62,7 @@ public class ContactController {
         log.info("INICIA CONTROLADOR POST {}/contacts/", userId);
         ContactResponseDto contact = contactService.createContactForUser(userId, contactRequest);
         log.info("TERMINA CONTROLADOR POST {}/contacts/", userId);
-        return new ResponseEntity<>(contact, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(contact);
     }
 
     @PutMapping("{contactId}")

@@ -33,7 +33,7 @@ public class VCardController {
         log.info("INICIA CONTROLADOR POST {}/vcards/", userId);
         VCardResponseDto vcard = vcardService.createVCardForUser(userId, vcardRequest);
         log.info("TERMINA CONTROLADOR POST {}/vcards/", userId);
-        return new ResponseEntity<>(vcard, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(vcard);
     }
 
     @GetMapping
