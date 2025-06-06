@@ -1,9 +1,17 @@
-{"properties": [{
-  "name": "spring.security.basic.username",
-  "type": "java.lang.String",
-  "description": "Username para autenticación basic desde aws lambda"
-},{
-  "name": "spring.security.basic.password",
-  "type": "java.lang.String",
-  "description": "Password para autenticación basic desde aws lambda"
-}]}
+{"properties": [
+  {
+    "name": "spring.security.basic.username",
+    "type": "java.lang.String",
+    "description": "Username para autenticación basic desde aws lambda"
+  },
+  {
+    "name": "spring.security.basic.password",
+    "type": "java.lang.String",
+    "description": "Password para autenticación basic desde aws lambda"
+  },
+  {
+    "name": "spring.web.cors.allowed-origins",
+    "type": "java.lang.String[]",
+    "description": "Orígenes permitidos"
+  }
+]}
