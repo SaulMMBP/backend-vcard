@@ -3,6 +3,7 @@ package io.github.saulmmbp.exceptions;
 import java.util.*;
 
 import org.springframework.http.*;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
@@ -30,6 +31,11 @@ public class GlobalExceptionHandler {
         log.error(exception.getMessage());
         return ResponseEntity.internalServerError().body(errorDetails);
     }
+    
+    @ExceptionHandler(AuthorizationDeniedException.class)
+    public ResponseEntity<?> applicationExceptionHandler(AuthorizationDeniedException exception, WebRequest request) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED.value()).build();
+    }
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ErrorDetailsDto> resourceNotFoundExceptionHandler(ResourceNotFoundException exception,
@@ -51,7 +57,7 @@ public class GlobalExceptionHandler {
     
     @ExceptionHandler(ResourceAlreadyExistsException.class)
     public ResponseEntity<ErrorDetailsDto> resourceAlreadyExistsExceptionHandler(
-            ResourceNotBelongsUserException exception, WebRequest request) {
+            ResourceAlreadyExistsException exception, WebRequest request) {
         ErrorDetailsDto errorDetails = new ErrorDetailsDto(new Date(), exception.getMessage(), null,
                 request.getDescription(false));
         log.info(exception.getMessage());
