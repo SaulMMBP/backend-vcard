@@ -23,14 +23,18 @@ import lombok.Setter;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    private static final String ROLE = "LAMBDA";
-    private String username;
-    private String password;
+    private static final String LAMBDA_ROLE = "LAMBDA";
+    private static final String SWAGGER_ROLE = "SWAGGER";
+    private String lambdaUsername;
+    private String lambdaPassword;
+    private String swaggerUsername;
+    private String swaggerPassword;
 
     @Bean
     @Order(1)
     SecurityFilterChain basicSecurityFilterChain(HttpSecurity http) throws Exception {
-        return http.securityMatchers(matchers -> matchers.requestMatchers(HttpMethod.POST, "/users"))
+        return http.securityMatchers(matchers -> matchers.requestMatchers(HttpMethod.POST, "/users")
+                    .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/openapi.yml"))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(req -> req.anyRequest().authenticated()).httpBasic(Customizer.withDefaults())
                 .cors(Customizer.withDefaults()).csrf(CsrfConfigurer::disable).build();
@@ -47,8 +51,9 @@ public class SecurityConfig {
 
     @Bean
     UserDetailsService userDetailsService() {
-        UserDetails user = User.withUsername(username).password(password).roles(ROLE).build();
-        return new InMemoryUserDetailsManager(user);
+        UserDetails lambdaUser = User.withUsername(lambdaUsername).password(lambdaPassword).roles(LAMBDA_ROLE).build();
+        UserDetails swaggerUser = User.withUsername(swaggerUsername).password(swaggerPassword).roles(SWAGGER_ROLE).build(); 
+        return new InMemoryUserDetailsManager(lambdaUser, swaggerUser);
     }
 
 }

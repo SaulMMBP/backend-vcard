@@ -1,13 +1,23 @@
 {"properties": [
   {
-    "name": "spring.security.basic.username",
+    "name": "spring.security.basic.lambdaUsername",
     "type": "java.lang.String",
     "description": "Username para autenticación basic desde aws lambda"
   },
   {
-    "name": "spring.security.basic.password",
+    "name": "spring.security.basic.lambdaPassword",
     "type": "java.lang.String",
     "description": "Password para autenticación basic desde aws lambda"
+  },
+  {
+    "name": "spring.security.basic.swaggerUsername",
+    "type": "java.lang.String",
+    "description": "Username para acceso a swagger"
+  },
+  {
+    "name": "spring.security.basic.swaggerPassword",
+    "type": "java.lang.String",
+    "description": "Password para acceso a swagger"
   },
   {
     "name": "spring.web.cors.allowed-origins",

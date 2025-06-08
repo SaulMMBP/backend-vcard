@@ -1,0 +1,310 @@
+openapi: '3.0.3'
+info:
+  title: Backend VCard
+  description: REST API que permite crear tarjetas de presentación
+  version: '1.0.0'
+externalDocs:
+  description: Github repository
+  url: https://github.com/SaulMMBP/backend-vcard
+servers:
+  - url: http://backend-vcard-env.eba-iiyymghu.us-east-2.elasticbeanstalk.com
+  - url: http://localhost:8080
+security:
+  - BearerAuth: []  
+paths:
+  /{userId}/contacts:
+    get:
+      summary: Obtiene todos los contactos de un usuario
+      parameters:
+        - $ref: "#/components/parameters/userId"
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/size"
+        - $ref: "#/components/parameters/sort"
+      responses:
+        '200':
+          description: OK
+          $ref: "#/components/responses/contacts"
+        '403':
+          description: FORBIDDEN
+      tags:
+        - Contact
+    post:
+      summary: Crea un contacto para un usuario
+      parameters:
+        - $ref: "#/components/parameters/userId"
+      requestBody:
+        $ref: "#/components/requestBodies/contact"
+      responses:
+        '201':
+          description: CREATED
+          $ref: "#/components/responses/contact"
+        '400':
+          description: BAD REQUEST
+          $ref: "#/components/responses/ErrorDetails"
+        '401':
+          description: UNAUTHORIZED
+          $ref: "#/components/responses/ErrorDetails"
+        '403':
+          description: FORBIDDEN
+        '404':
+          description: USER NOT FOUND
+          $ref: "#/components/responses/ErrorDetails"
+      tags:
+        - Contact
+  /{userId}/contacts/{contactId}:
+    get:
+      summary: Obtiene un contacto de un usuario
+      parameters:
+        - $ref: "#/components/parameters/userId"
+        - $ref: "#/components/parameters/contactId"
+      responses:
+        '200':
+          description: OK
+          $ref: "#/components/responses/contact"
+        '401':
+          description: UNAUTHORIZED
+          $ref: "#/components/responses/ErrorDetails"
+        '403':
+          description: FORBIDDEN
+        '404':
+          description: NOT FOUND
+          $ref: "#/components/responses/ErrorDetails"
+      tags:
+        - Contact
+    put:
+      summary: Actualiza un contacto de un usuario
+      parameters:
+        - $ref: "#/components/parameters/userId"
+        - $ref: "#/components/parameters/contactId"
+      requestBody:
+        $ref: "#/components/requestBodies/contact"
+      responses:
+        '200':
+          description: OK
+          $ref: "#/components/responses/contact"
+        '400':
+          description: BAD REQUEST
+          $ref: "#/components/responses/ErrorDetails"
+        '401':
+          description: UNAUTHORIZED
+          $ref: "#/components/responses/ErrorDetails"
+        '403':
+          description: FORBIDDEN
+        '404':
+          description: NOT FOUND ó USER NOT FOUND
+          $ref: "#/components/responses/ErrorDetails"
+      tags:
+        - Contact
+    delete:
+      summary: Elimina el contacto de un usuario
+      parameters:
+        - $ref: "#/components/parameters/userId"
+        - $ref: "#/components/parameters/contactId"
+      responses:
+        '204':
+          description: NO CONTENT
+        '401':
+          description: UNAUTHORIZED
+          $ref: "#/components/responses/ErrorDetails"
+        '403':
+          description: FORBIDDEN
+        '404':
+          description: NOT FOUND ó USER NOT FOUND
+          $ref: "#/components/responses/ErrorDetails"
+      tags:
+        - Contact
+components:
+  parameters:
+    contactId:
+      name: contactId
+      description: Id de contacto
+      in: path
+      schema:
+        type: integer
+      required: true
+    userId:
+      name: userId
+      description: Id de usuario
+      in: path
+      schema: 
+        type: string
+      required: true
+    page:
+      name: page
+      description: Número de página
+      in: query
+      schema:
+        type: integer
+        default: 0
+      required: false
+    size:
+      name: size
+      description: Número de elementos a obtener por página
+      in: query
+      schema:
+        type: integer
+        default: 10
+      required: false
+    sort:
+      name: sort
+      description: Orden de los elementos del paginado
+      example: sort=name,asc
+      in: query
+      schema:
+        type: string
+      required: false
+    authorization:
+      name: Authorization
+      in: header
+      schema:
+        type: string
+  schemas:
+    ErrorDetails:
+      type: object
+      properties:
+        timestamp:
+          type: string
+        message:
+          type: string
+        messages:
+          type: array
+          items:
+            type: object
+          example: { Field: 'message error' }
+        details:
+          type: string
+    _links:
+      type: object
+      properties:
+        self:
+          type: object
+          properties:
+            href:
+              type: string
+    page:
+      type: object
+      properties:
+        size:
+          type: integer
+        totalElements:
+          type: integer
+        totalPages:
+          type: integer
+        number:
+          type: integer
+    contacts:
+      type: object
+      properties:
+        _embedded:
+          type: object
+          properties:
+            contacts:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  userId:
+                    type: string
+                  identifier:
+                    type: string
+                  name:
+                    type: string
+                  email:
+                    type: string
+                  position:
+                    type: string
+                  company:
+                    type: string
+                  web: 
+                    type: string
+                  phones:
+                    type: array
+                    items:
+                      type: string
+                  _links:
+                    $ref: "#/components/schemas/_links"
+        _links:
+          $ref: "#/components/schemas/_links"
+        page:
+          $ref: "#/components/schemas/page"
+    contactResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        identifier:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        position:
+          type: string
+        company:
+          type: string
+        web: 
+          type: string
+        phones:
+          type: array
+          items:
+            type: string
+    contactRequest:
+      type: object
+      properties:
+        identifier:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        position:
+          type: string
+        company:
+          type: string
+        web: 
+          type: string
+        phones:
+          type: array
+          items:
+            type: string
+      required:
+        - "identifier"
+        - "name"
+        - "phones"
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  requestBodies:
+    contact:
+      description: Request para crear o actualizar contacto
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/contactRequest"            
+  responses:
+    ErrorDetails:
+      description: Response de detalles de error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorDetails"
+    contacts:
+      description: Response de contactos paginados
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/contacts"
+    contact:
+      description: Response de contacto
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/contactResponse"
+            
+  
