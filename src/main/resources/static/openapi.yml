@@ -113,8 +113,159 @@ paths:
           $ref: "#/components/responses/ErrorDetails"
       tags:
         - Contact
+  /{userId}/vcards:
+    post:
+      summary: Crea una nueva vcard para el usuario
+      parameters:
+        - $ref: "#/components/parameters/userId"
+      requestBody:
+        $ref: "#/components/requestBodies/vcard"
+      responses:
+        '201':
+          description: CREATED
+          $ref: "#/components/responses/vcard"
+        '400':
+          description: BAD REQUEST
+          $ref: "#/components/responses/ErrorDetails"
+        '401':
+          description: UNAUTHORIZED
+          $ref: "#/components/responses/ErrorDetails"
+        '403':
+          description: FORBIDDEN
+        '404':
+          description: USER NOT FOUND
+          $ref: "#/components/responses/ErrorDetails"
+      tags:
+        - VCard
+    get:
+      summary: Obtiene todos los vcards de un usuario
+      parameters:
+        - $ref: "#/components/parameters/userId"
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/size"
+        - $ref: "#/components/parameters/sort"
+      responses:
+        '200':
+          description: OK
+          $ref: "#/components/responses/vcards"
+        '403':
+          description: FORBIDDEN
+      tags:
+        - VCard
+  /{userId}/vcards/{vcardId}:
+    get:
+      summary: Obtiene un vcard de un usuario
+      parameters:
+        - $ref: "#/components/parameters/userId"
+        - $ref: "#/components/parameters/vcardId"
+      responses:
+        '200':
+          description: OK
+          $ref: "#/components/responses/vcard"
+        '401':
+          description: UNAUTHORIZED
+          $ref: "#/components/responses/ErrorDetails"
+        '403':
+          description: FORBIDDEN
+        '404':
+          description: NOT FOUND
+          $ref: "#/components/responses/ErrorDetails"
+      tags:
+        - VCard
+    put:
+      summary: Actualiza un vcard de un usuario
+      parameters:
+        - $ref: "#/components/parameters/userId"
+        - $ref: "#/components/parameters/vcardId"
+      requestBody:
+        $ref: "#/components/requestBodies/vcard"
+      responses:
+        '200':
+          description: OK
+          $ref: "#/components/responses/vcard"
+        '400':
+          description: BAD REQUEST
+          $ref: "#/components/responses/ErrorDetails"
+        '401':
+          description: UNAUTHORIZED
+          $ref: "#/components/responses/ErrorDetails"
+        '403':
+          description: FORBIDDEN
+        '404':
+          description: NOT FOUND ó USER NOT FOUND
+          $ref: "#/components/responses/ErrorDetails"
+      tags:
+        - VCard
+    delete:
+      summary: Elimina el vcard de un usuario
+      parameters:
+        - $ref: "#/components/parameters/userId"
+        - $ref: "#/components/parameters/vcardId"
+      responses:
+        '204':
+          description: NO CONTENT
+        '401':
+          description: UNAUTHORIZED
+          $ref: "#/components/responses/ErrorDetails"
+        '403':
+          description: FORBIDDEN
+        '404':
+          description: NOT FOUND ó USER NOT FOUND
+          $ref: "#/components/responses/ErrorDetails"
+      tags:
+        - VCard
+  /{userId}/vcards/{vcardId}/qr:
+    get:
+      summary: Descarga un png del qr de una vcard
+      parameters:
+        - $ref: "#/components/parameters/userId"
+        - $ref: "#/components/parameters/vcardId"
+      responses:
+        '200':
+          description: OK
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+        '401':
+          description: UNAUTHORIZED
+          $ref: "#/components/responses/ErrorDetails"
+        '403':
+          description: FORBIDDEN
+        '404':
+          description: NOT FOUND ó USER NOT FOUND
+          $ref: "#/components/responses/ErrorDetails"
+      tags:
+        - VCard
+  /{userId}/summary:
+    get:
+      summary: Obtiene el total de contactos y vcards del usuario
+      parameters:
+        - $ref: "#/components/parameters/userId"
+      responses:
+        '200':
+          description: OK
+          $ref: "#/components/responses/summary"
+        '401':
+          description: UNAUTHORIZED
+          $ref: "#/components/responses/ErrorDetails"
+        '403':
+          description: FORBIDDEN
+        '404':
+          description: USER NOT FOUND
+          $ref: "#/components/responses/ErrorDetails"
+      tags:
+        - Summary
 components:
   parameters:
+    vcardId:
+      name: vcardId
+      description: Id de vcard
+      in: path
+      schema:
+        type: integer
+      required: true
     contactId:
       name: contactId
       description: Id de contacto
@@ -275,6 +426,65 @@ components:
         - "identifier"
         - "name"
         - "phones"
+    vcardResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        userId:
+          type: string
+        name:
+          type: string
+        color:
+          type: string
+        contact:
+          $ref: "#/components/schemas/contactResponse"
+    vcardRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        color:
+          type: string
+        contactId:
+          type: integer
+      required:
+        - name
+        - contactId
+    vcards:
+      type: object
+      properties:
+        _embedded:
+          type: object
+          properties:
+            vcards:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  userId:
+                    type: string
+                  name:
+                    type: string
+                  color:
+                    type: string
+                  contact:
+                    $ref: "#/components/schemas/contactResponse"
+                  _links:
+                    $ref: "#/components/schemas/_links"
+        _links:
+          $ref: "#/components/schemas/_links"
+        page:
+          $ref: "#/components/schemas/page"
+    summaryResponse:
+      type: object
+      properties:
+        contactsTotal:
+          type: integer
+        cardsTotal:
+          type: integer
   securitySchemes:
     BearerAuth:
       type: http
@@ -286,7 +496,13 @@ components:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/contactRequest"            
+            $ref: "#/components/schemas/contactRequest"
+    vcard:
+      description: Request para crear o actualizar vcard
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/vcardRequest"            
   responses:
     ErrorDetails:
       description: Response de detalles de error
@@ -306,5 +522,23 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/contactResponse"
+    vcards:
+      description: Response de contactos paginados
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/vcards"
+    vcard:
+      description: Response de contato
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/vcardResponse"
+    summary:
+      description: Response de summary
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/summaryResponse"
             
   
