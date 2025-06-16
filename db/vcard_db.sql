@@ -1,4 +1,4 @@
-DROP SCHEMA vcard_db;
+DROP SCHEMA IF EXISTS vcard_db;
 CREATE SCHEMA IF NOT EXISTS vcard_db;
 
 USE vcard_db;
