@@ -1,6 +1,6 @@
 package io.github.saulmmbp.configs;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
@@ -14,20 +14,24 @@ import org.springframework.security.core.userdetails.*;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
-import lombok.Setter;
-
-@Setter
 @Configuration
-@ConfigurationProperties(prefix = "spring.security.basic")
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
 
     private static final String LAMBDA_ROLE = "LAMBDA";
     private static final String SWAGGER_ROLE = "SWAGGER";
+    
+    @Value("${spring.security.basic.lambdaUsername}")
     private String lambdaUsername;
+    
+    @Value("${spring.security.basic.lambdaPassword}")
     private String lambdaPassword;
+    
+    @Value("${spring.security.basic.swaggerUsername}")
     private String swaggerUsername;
+    
+    @Value("${spring.security.basic.swaggerPassword}")
     private String swaggerPassword;
 
     @Bean
