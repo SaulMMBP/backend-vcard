@@ -19,7 +19,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorDetailsDto> runtimeExceptionHandler(RuntimeException exception, WebRequest request) {
         ErrorDetailsDto errorDetails = new ErrorDetailsDto(new Date(), exception.toString(), null,
                 request.getDescription(false));
-        log.error(exception.getMessage());
+        log.info("[{}] {}", HttpStatus.INTERNAL_SERVER_ERROR,exception.getMessage());
         return ResponseEntity.internalServerError().body(errorDetails);
     }
 
@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
             WebRequest request) {
         ErrorDetailsDto errorDetails = new ErrorDetailsDto(new Date(), exception.getMessage(), null,
                 request.getDescription(false));
-        log.error(exception.getMessage());
+        log.info("[{}] {}", HttpStatus.INTERNAL_SERVER_ERROR,exception.getMessage());
         return ResponseEntity.internalServerError().body(errorDetails);
     }
     
@@ -42,7 +42,7 @@ public class GlobalExceptionHandler {
             WebRequest request) {
         ErrorDetailsDto errorDetails = new ErrorDetailsDto(new Date(), exception.getMessage(), null,
                 request.getDescription(false));
-        log.info(exception.getMessage());
+        log.info("[{}] {}", HttpStatus.NOT_FOUND,exception.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorDetails);
     }
 
@@ -51,7 +51,7 @@ public class GlobalExceptionHandler {
             ResourceNotBelongsUserException exception, WebRequest request) {
         ErrorDetailsDto errorDetails = new ErrorDetailsDto(new Date(), exception.getMessage(), null,
                 request.getDescription(false));
-        log.info(exception.getMessage());
+        log.info("[{}] {}", HttpStatus.UNAUTHORIZED,exception.getMessage());
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorDetails);
     }
     
@@ -60,7 +60,7 @@ public class GlobalExceptionHandler {
             ResourceAlreadyExistsException exception, WebRequest request) {
         ErrorDetailsDto errorDetails = new ErrorDetailsDto(new Date(), exception.getMessage(), null,
                 request.getDescription(false));
-        log.info(exception.getMessage());
+        log.info("[{}] {}", HttpStatus.CONFLICT,exception.getMessage());
         return ResponseEntity.status(HttpStatus.CONFLICT).body(errorDetails);
     }
     
@@ -69,7 +69,16 @@ public class GlobalExceptionHandler {
         Map<String, String> messages = new HashMap<>();
         exception.getBindingResult().getFieldErrors().forEach(fieldError -> messages.put(fieldError.getField(), fieldError.getDefaultMessage()));
         ErrorDetailsDto errorDetails = new ErrorDetailsDto(new Date(), null, messages, request.getDescription(false));
-        log.info(exception.getMessage());
+        log.info("[{}] {}", HttpStatus.BAD_REQUEST,exception.getMessage());
+        return ResponseEntity.badRequest().body(errorDetails);
+    }
+    
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorDetailsDto> illegalArgumentExceptionHandler(IllegalArgumentException exception,
+            WebRequest request) {
+        ErrorDetailsDto errorDetails = new ErrorDetailsDto(new Date(), exception.getMessage(), null,
+                request.getDescription(false));
+        log.info("[{}] {}", HttpStatus.BAD_REQUEST,exception.getMessage());
         return ResponseEntity.badRequest().body(errorDetails);
     }
     
