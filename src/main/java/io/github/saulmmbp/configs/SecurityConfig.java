@@ -36,6 +36,15 @@ public class SecurityConfig {
 
     @Bean
     @Order(1)
+    SecurityFilterChain allowSecurityFilterChain(HttpSecurity http) throws Exception {
+        return http.securityMatchers(matchers -> matchers.requestMatchers("/actuator/**"))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(req -> req.anyRequest().permitAll())
+                .cors(Customizer.withDefaults()).csrf(CsrfConfigurer::disable).build();
+    }
+    
+    @Bean
+    @Order(2)
     SecurityFilterChain basicSecurityFilterChain(HttpSecurity http) throws Exception {
         return http.securityMatchers(matchers -> matchers.requestMatchers(HttpMethod.POST, "/users")
                     .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/openapi.yml"))
@@ -45,7 +54,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    @Order(2)
+    @Order(3)
     SecurityFilterChain cognitoSecurityFilterChain(HttpSecurity http) throws Exception {
         return http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(req -> req.anyRequest().authenticated())
